@@ -4,9 +4,10 @@ const user = (name, items, stock) => `
       <p class="user-name">${name}</p>
     </div>
     <div class="users-items">
-      ${Object.entries(items).map(
-        ([item, count]) => `
-          <div class="user-item" id="${item}">
+      ${Object.entries(items)
+        .map(
+          ([item, count]) => `
+          <div class="user-item" data-item="${item}" data-user="${name}">
             <button data-action="decrement" ${
               count <= 0 ? 'disabled' : ''
             }>-</button>
@@ -16,7 +17,10 @@ const user = (name, items, stock) => `
             }>+</button>
           </div>
         `
-      )}
+        )
+        .join('')}
     </div>
   </div>
 `;
+
+export default user;

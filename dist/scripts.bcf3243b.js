@@ -117,9 +117,132 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"scripts/index.js":[function(require,module,exports) {
-console.log('hello');
-},{}],"../../../.nvm/versions/node/v10.15.0/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+})({"scripts/state/model.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var data = {
+  customers: {
+    Moe: {
+      Foo: 0,
+      Bar: 0,
+      Bazz: 0
+    },
+    Larry: {
+      Foo: 0,
+      Bar: 0,
+      Bazz: 0
+    },
+    Curly: {
+      Foo: 0,
+      Bar: 0,
+      Bazz: 0
+    }
+  },
+  prizes: {
+    Foo: 1,
+    Bar: 3,
+    Bazz: 5
+  }
+};
+var _default = data;
+exports.default = _default;
+},{}],"scripts/components/item.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var item = function item(itemName, count) {
+  return "\n  <div class=\"item\">\n    <div class=\"item-header\">\n      <p class=\"item-title\">".concat(itemName, "</p>\n    </div>\n    <div class=\"item-body\">\n      <p class=\"item-count\">").concat(count, "</p>\n    </div>\n  </div>\n");
+};
+
+var _default = item;
+exports.default = _default;
+},{}],"scripts/components/user.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var user = function user(name, items, stock) {
+  return "\n  <div class=\"user\">\n    <div class=\"user-header\">\n      <p class=\"user-name\">".concat(name, "</p>\n    </div>\n    <div class=\"users-items\">\n      ").concat(Object.entries(items).map(function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+        item = _ref2[0],
+        count = _ref2[1];
+
+    return "\n          <div class=\"user-item\" data-item=\"".concat(item, "\" data-user=\"").concat(name, "\">\n            <button data-action=\"decrement\" ").concat(count <= 0 ? 'disabled' : '', ">-</button>\n            <span class=\"user-item-content\">").concat(item, ": ").concat(count, "</span>\n            <button data-action=\"increment\" ").concat(stock[item] <= 0 ? 'disabled' : '', ">+</button>\n          </div>\n        ");
+  }).join(''), "\n    </div>\n  </div>\n");
+};
+
+var _default = user;
+exports.default = _default;
+},{}],"scripts/index.js":[function(require,module,exports) {
+"use strict";
+
+var _model = _interopRequireDefault(require("./state/model"));
+
+var _item = _interopRequireDefault(require("./components/item"));
+
+var _user = _interopRequireDefault(require("./components/user"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var state = _model.default; // HTML elements
+
+var usersContainer = document.getElementById('users');
+var itemsContainer = document.getElementById('items'); // Render function
+
+function render(_ref) {
+  var customers = _ref.customers,
+      prizes = _ref.prizes;
+  var users = Object.entries(customers).map(function (_ref2) {
+    var _ref3 = _slicedToArray(_ref2, 2),
+        userName = _ref3[0],
+        userItems = _ref3[1];
+
+    return (0, _user.default)(userName, userItems, prizes);
+  }).join('');
+  var items = Object.entries(prizes).map(function (_ref4) {
+    var _ref5 = _slicedToArray(_ref4, 2),
+        itemName = _ref5[0],
+        itemCount = _ref5[1];
+
+    return (0, _item.default)(itemName, itemCount);
+  }).join('');
+  usersContainer.innerHTML = users;
+  itemsContainer.innerHTML = items;
+} // Initial render
+
+
+render(state); // Event Listeners
+
+usersContainer.addEventListener('click', function (e) {// listen for btn clicks; dispatch actions; update state; rerender
+}); // add ability to add users and items; local storage? other apis?
+},{"./state/model":"scripts/state/model.js","./components/item":"scripts/components/item.js","./components/user":"scripts/components/user.js"}],"../../../.nvm/versions/node/v10.15.0/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -147,7 +270,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53420" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50520" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

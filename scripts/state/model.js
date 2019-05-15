@@ -22,3 +22,5 @@ const data = {
     Bazz: 5,
   },
 };
+
+export default data;
