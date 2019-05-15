@@ -1,4 +1,4 @@
-const user = (name, items) => `
+const user = (name, items, stock) => `
   <div class="user">
     <div class="user-header">
       <p class="user-name">${name}</p>
@@ -6,8 +6,16 @@ const user = (name, items) => `
     <div class="users-items">
       ${Object.entries(items).map(
         ([item, count]) => `
-
-      `
+          <div class="user-item" id="${item}">
+            <button data-action="decrement" ${
+              count <= 0 ? 'disabled' : ''
+            }>-</button>
+            <span class="user-item-content">${item}: ${count}</span>
+            <button data-action="increment" ${
+              stock[item] <= 0 ? 'disabled' : ''
+            }>+</button>
+          </div>
+        `
       )}
     </div>
   </div>
