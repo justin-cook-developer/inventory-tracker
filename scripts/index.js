@@ -1,6 +1,6 @@
 import model from './state/model';
 import Item from './components/item';
-import User from './components/comp';
+import User from './components/user';
 import actions from './state/actions';
 import reducer from './state/reducer';
 

@@ -352,7 +352,6 @@ function render(_ref) {
 render(state); // Event Listeners
 
 usersContainer.addEventListener('click', function (e) {
-  // listen for btn clicks; dispatch actions; update state; rerender
   var action = e.target.dataset.action;
 
   if (action !== 'decrement' && action !== 'increment') {
@@ -362,14 +361,10 @@ usersContainer.addEventListener('click', function (e) {
   var _e$target$parentNode$ = e.target.parentNode.dataset,
       item = _e$target$parentNode$.item,
       user = _e$target$parentNode$.user;
-  console.log(item, user);
 
   var stateAction = _actions.default[action](item, user);
 
-  console.log(stateAction);
-  console.log(state);
   state = (0, _reducer.default)(state, stateAction);
-  console.log(state);
   render(state);
 }); // add ability to add users and items; local storage? other apis?
 },{"./state/model":"scripts/state/model.js","./components/item":"scripts/components/item.js","./components/user":"scripts/components/user.js","./state/actions":"scripts/state/actions.js","./state/reducer":"scripts/state/reducer.js"}],"../../../.nvm/versions/node/v10.15.0/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -400,7 +395,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60316" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51317" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
