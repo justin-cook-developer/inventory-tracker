@@ -1,6 +1,6 @@
 import model from './state/model';
-import item from './components/item';
-import user from './components/user';
+import Item from './components/item';
+import User from './components/comp';
 import actions from './state/actions';
 import reducer from './state/reducer';
 
@@ -13,11 +13,11 @@ const itemsContainer = document.getElementById('items');
 // Render function
 function render({ customers, prizes }) {
   const users = Object.entries(customers)
-    .map(([userName, userItems]) => user(userName, userItems, prizes))
+    .map(([userName, userItems]) => User(userName, userItems, prizes))
     .join('');
 
   const items = Object.entries(prizes)
-    .map(([itemName, itemCount]) => item(itemName, itemCount))
+    .map(([itemName, itemCount]) => Item(itemName, itemCount))
     .join('');
 
   usersContainer.innerHTML = users;
@@ -29,7 +29,6 @@ render(state);
 
 // Event Listeners
 usersContainer.addEventListener('click', e => {
-  // listen for btn clicks; dispatch actions; update state; rerender
   const action = e.target.dataset.action;
 
   if (action !== 'decrement' && action !== 'increment') {
@@ -37,12 +36,8 @@ usersContainer.addEventListener('click', e => {
   }
 
   const { item, user } = e.target.parentNode.dataset;
-  console.log(item, user);
   const stateAction = actions[action](item, user);
-  console.log(stateAction);
-  console.log(state);
   state = reducer(state, stateAction);
-  console.log(state);
   render(state);
 });
 
