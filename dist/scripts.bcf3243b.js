@@ -127,7 +127,7 @@ exports.default = void 0;
 var data = {
   customers: {
     Moe: {
-      Foo: 0,
+      Foo: 1,
       Bar: 0,
       Bazz: 0
     },
@@ -143,7 +143,7 @@ var data = {
     }
   },
   prizes: {
-    Foo: 1,
+    Foo: 0,
     Bar: 3,
     Bazz: 5
   }
@@ -192,6 +192,113 @@ var user = function user(name, items, stock) {
 
 var _default = user;
 exports.default = _default;
+},{}],"scripts/state/actions.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var decrement = function decrement(item, user) {
+  return {
+    type: 'decrement',
+    item: item,
+    user: user
+  };
+};
+
+var increment = function increment(item, user) {
+  return {
+    type: 'increment',
+    item: item,
+    user: user
+  };
+};
+
+var actions = {
+  decrement: decrement,
+  increment: increment
+};
+var _default = actions;
+exports.default = _default;
+},{}],"scripts/state/reducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var cloneArray = function cloneArray(arr) {
+  return arr.map(function (el) {
+    if (Array.isArray(el)) {
+      return cloneArray(el);
+    } else if (_typeof(el) === 'object') {
+      return cloneObject(el);
+    } else {
+      return el;
+    }
+  });
+};
+
+var cloneObject = function cloneObject(obj) {
+  var newObj = _objectSpread({}, obj);
+
+  for (var key in newObj) {
+    if (newObj.hasOwnProperty(key)) {
+      var value = newObj[key];
+
+      if (Array.isArray(value)) {
+        newObj[key] = cloneArray(value);
+      } else if (_typeof(value) === 'object') {
+        newObj[key] = cloneObject(value);
+      }
+    }
+  }
+
+  return newObj;
+};
+
+var reducer = function reducer(state, action) {
+  switch (action.type) {
+    case 'decrement':
+      {
+        var item = action.item,
+            user = action.user;
+        var newState = cloneObject(state);
+        newState.customers[user][item]--;
+        newState.prizes[item]++;
+        return newState;
+      }
+
+    case 'increment':
+      {
+        var _item = action.item,
+            _user = action.user;
+
+        var _newState = cloneObject(state);
+
+        _newState.customers[_user][_item]++;
+        _newState.prizes[_item]--;
+        return _newState;
+      }
+
+    default:
+      {
+        return state;
+      }
+  }
+};
+
+var _default = reducer;
+exports.default = _default;
 },{}],"scripts/index.js":[function(require,module,exports) {
 "use strict";
 
@@ -200,6 +307,10 @@ var _model = _interopRequireDefault(require("./state/model"));
 var _item = _interopRequireDefault(require("./components/item"));
 
 var _user = _interopRequireDefault(require("./components/user"));
+
+var _actions = _interopRequireDefault(require("./state/actions"));
+
+var _reducer = _interopRequireDefault(require("./state/reducer"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -240,9 +351,28 @@ function render(_ref) {
 
 render(state); // Event Listeners
 
-usersContainer.addEventListener('click', function (e) {// listen for btn clicks; dispatch actions; update state; rerender
+usersContainer.addEventListener('click', function (e) {
+  // listen for btn clicks; dispatch actions; update state; rerender
+  var action = e.target.dataset.action;
+
+  if (action !== 'decrement' && action !== 'increment') {
+    return;
+  }
+
+  var _e$target$parentNode$ = e.target.parentNode.dataset,
+      item = _e$target$parentNode$.item,
+      user = _e$target$parentNode$.user;
+  console.log(item, user);
+
+  var stateAction = _actions.default[action](item, user);
+
+  console.log(stateAction);
+  console.log(state);
+  state = (0, _reducer.default)(state, stateAction);
+  console.log(state);
+  render(state);
 }); // add ability to add users and items; local storage? other apis?
-},{"./state/model":"scripts/state/model.js","./components/item":"scripts/components/item.js","./components/user":"scripts/components/user.js"}],"../../../.nvm/versions/node/v10.15.0/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./state/model":"scripts/state/model.js","./components/item":"scripts/components/item.js","./components/user":"scripts/components/user.js","./state/actions":"scripts/state/actions.js","./state/reducer":"scripts/state/reducer.js"}],"../../../.nvm/versions/node/v10.15.0/lib/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -270,7 +400,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50520" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60316" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

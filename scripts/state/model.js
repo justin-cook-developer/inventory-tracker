@@ -1,7 +1,7 @@
 const data = {
   customers: {
     Moe: {
-      Foo: 0,
+      Foo: 1,
       Bar: 0,
       Bazz: 0,
     },
@@ -17,7 +17,7 @@ const data = {
     },
   },
   prizes: {
-    Foo: 1,
+    Foo: 0,
     Bar: 3,
     Bazz: 5,
   },
