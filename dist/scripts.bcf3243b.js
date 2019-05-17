@@ -159,7 +159,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var item = function item(itemName, count) {
-  return "\n  <div class=\"item\">\n    <div class=\"item-header\">\n      <p class=\"item-title\">".concat(itemName, "</p>\n    </div>\n    <div class=\"item-body\">\n      <p class=\"item-count\">").concat(count, "</p>\n    </div>\n  </div>\n");
+  return "\n  <div class=\"item flex-item\">\n    <div class=\"item-header\">\n      <p class=\"item-title\">".concat(itemName, "</p>\n    </div>\n    <div class=\"item-body\">\n      <p class=\"item-count\">").concat(count, "</p>\n    </div>\n  </div>\n");
 };
 
 var _default = item;
@@ -181,7 +181,7 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var user = function user(name, items, stock) {
-  return "\n  <div class=\"user\">\n    <div class=\"user-header\">\n      <p class=\"user-name\">".concat(name, "</p>\n    </div>\n    <div class=\"users-items\">\n      ").concat(Object.entries(items).map(function (_ref) {
+  return "\n  <div class=\"user flex-item\">\n    <div class=\"user-header\">\n      <p class=\"user-name\">".concat(name, "</p>\n    </div>\n    <div class=\"users-items\">\n      ").concat(Object.entries(items).map(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
         item = _ref2[0],
         count = _ref2[1];
@@ -395,7 +395,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51317" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58732" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

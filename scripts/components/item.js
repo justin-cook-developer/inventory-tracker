@@ -1,5 +1,5 @@
 const item = (itemName, count) => `
-  <div class="item">
+  <div class="item flex-item">
     <div class="item-header">
       <p class="item-title">${itemName}</p>
     </div>

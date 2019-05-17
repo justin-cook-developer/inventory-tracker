@@ -1,5 +1,5 @@
 const user = (name, items, stock) => `
-  <div class="user">
+  <div class="user flex-item">
     <div class="user-header">
       <p class="user-name">${name}</p>
     </div>

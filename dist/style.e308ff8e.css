@@ -1,2 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  margin: 10% auto 0 auto;
+  max-width: 900px;
+}
+
+.item-container {
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#items {
+  margin: 5% 0 12% 0;
+}
+
+.flex-item {
+  flex-basis: 80%;
+  text-align: center;
+  margin-bottom: 6%;
+}
+
+@media (min-width: 500px) {
+  .flex-item {
+    flex-basis: 30%;
+  }
+}
+
 
 /*# sourceMappingURL=/style.e308ff8e.css.map */
